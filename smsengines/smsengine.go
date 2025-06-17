@@ -1,4 +1,4 @@
-package sms
+package smsengines
 
 var (
 	DefaultSmsEngine ISmsEngine = &NilSmsEngine{}
