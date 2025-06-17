@@ -49,7 +49,7 @@ func NewN3d(lower, upper int64) (*N3d, error) {
 
 		a := key[i]
 		if a > 127 {
-			return nil, errors.New("The key is error.")
+			return nil, errors.New("the key is error")
 		}
 
 		n.keyCode += int64(a) * int64(math.Pow(float64(128), float64(i%7)))
@@ -64,7 +64,7 @@ func NewN3d(lower, upper int64) (*N3d, error) {
 	}
 
 	if n.keyCode+n.radix < n.upper {
-		return nil, errors.New("The secret key is too short.")
+		return nil, errors.New("the secret key is too short")
 	}
 
 	j, k := 0, n.keyCode-n.radix
@@ -92,7 +92,7 @@ func NewN3d(lower, upper int64) (*N3d, error) {
 
 func (n *N3d) Encrypt(num int64) (string, error) {
 	if num > n.upper || num < n.lower {
-		return "", errors.New("Parameter is error.")
+		return "", errors.New("parameter is error")
 	}
 
 	num = n.keyCode - num
@@ -116,14 +116,14 @@ func (n *N3d) Encrypt(num int64) (string, error) {
 
 func (n *N3d) Decrypt(str string) (int64, error) {
 	if str == "" {
-		return 0, errors.New("Parameter is error.")
+		return 0, errors.New("parameter is error")
 	}
 
 	chars := []byte(str)
 	l, t, s := len(chars), 0, int64(0)
 	result := int64(strings.IndexByte(string(n.dict[0][:]), chars[0]))
 	if result < 0 {
-		return 0, errors.New("Invalid string.")
+		return 0, errors.New("invalid string")
 	}
 
 	mapping := string(n.dict[result][:])
@@ -142,7 +142,7 @@ func (n *N3d) Decrypt(str string) (int64, error) {
 
 		j := strings.IndexByte(mapping, chars[i])
 		if j < 0 {
-			return 0, errors.New("Invalid string.")
+			return 0, errors.New("invalid string")
 		}
 
 		s = int64(j - t)
