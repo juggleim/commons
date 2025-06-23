@@ -60,6 +60,7 @@ require (
 	github.com/go-sql-driver/mysql v1.9.3
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/jinzhu/gorm v1.9.16
+	github.com/juggleim/imserver-sdk-go v1.0.6
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
 	github.com/minio/md5-simd v1.1.2 // indirect
 	github.com/qiniu/go-sdk/v7 v7.25.4
