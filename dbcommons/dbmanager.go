@@ -9,6 +9,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/juggleim/commons/configures"
 )
 
 var db *gorm.DB
@@ -16,14 +17,14 @@ var db *gorm.DB
 func GetDb() *gorm.DB {
 	return db
 }
-func InitMysql(address, dbname, user, password string, isDebug bool) error {
+func InitMysql() error {
 	var err error
 
 	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", //&interpolateParams=true
-		user,
-		password,
-		address,
-		dbname))
+		configures.Config.Mysql.User,
+		configures.Config.Mysql.Password,
+		configures.Config.Mysql.Address,
+		configures.Config.Mysql.DbName))
 
 	if err != nil {
 		log.Fatalf("connect mysql err: %v", err)
@@ -35,7 +36,7 @@ func InitMysql(address, dbname, user, password string, isDebug bool) error {
 	}
 
 	db.SingularTable(true)
-	db.LogMode(isDebug)
+	db.LogMode(configures.Config.Mysql.Debug)
 	db.SetLogger(&dbLogger{})
 	/*
 		db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
