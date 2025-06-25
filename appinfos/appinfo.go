@@ -62,3 +62,54 @@ func GetAppInfo(appkey string) (*AppInfo, bool) {
 func GetAppLock() *sync.RWMutex {
 	return appLock
 }
+
+var notExist interface{} = struct{}{}
+
+func (app *AppInfo) GetExt(key string) (bool, interface{}) {
+	if val, ok := app.ExtMap[key]; ok {
+		if val == notExist {
+			return false, nil
+		}
+		return true, val
+	} else {
+		appLock.Lock()
+		defer appLock.Unlock()
+		extDao := dbcommons.AppExtDao{}
+		exts, err := extDao.FindByItemKeys(app.AppKey, []string{key})
+		if err == nil {
+			for _, ext := range exts {
+				if ext.AppItemKey == key {
+					app.ExtMap[key] = ext.AppItemValue
+					return true, ext.AppItemValue
+				}
+			}
+		}
+		app.ExtMap[key] = notExist
+		return false, nil
+	}
+}
+
+func (app *AppInfo) GetExtByCreator(key string, creator func(val string) interface{}) (bool, interface{}) {
+	if val, ok := app.ExtMap[key]; ok {
+		if val == notExist {
+			return false, nil
+		}
+		return true, val
+	} else {
+		appLock.Lock()
+		defer appLock.Unlock()
+		extDao := dbcommons.AppExtDao{}
+		exts, err := extDao.FindByItemKeys(app.AppKey, []string{key})
+		if err == nil {
+			for _, ext := range exts {
+				if ext.AppItemKey == key {
+					obj := creator(ext.AppItemValue)
+					app.ExtMap[key] = obj
+					return true, obj
+				}
+			}
+		}
+		app.ExtMap[key] = notExist
+		return false, nil
+	}
+}
