@@ -6,6 +6,7 @@ import (
 
 	"github.com/juggleim/commons/caches"
 	"github.com/juggleim/commons/dbcommons"
+	"github.com/juggleim/commons/emailengines"
 	"github.com/juggleim/commons/smsengines"
 	"github.com/juggleim/commons/transengines"
 )
@@ -26,6 +27,7 @@ type AppInfo struct {
 	AppStatus    int
 
 	SmsEngine   smsengines.ISmsEngine
+	MailEngine  emailengines.IEmailEngine
 	TransEngine transengines.ITransEngine
 
 	ExtMap map[string]interface{}
