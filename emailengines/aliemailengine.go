@@ -13,12 +13,16 @@ import (
 )
 
 type AliEmailEngine struct {
-	AccessKeyId     string
-	AccessKeySecret string
-	FromEmail       string
+	client          *dm20151123.Client `json:"-"`
+	AccessKeyId     string             `json:"access_key"`
+	AccessKeySecret string             `json:"access_secret"`
+	FromEmail       string             `json:"from_email"`
 }
 
 func (engine *AliEmailEngine) createClient() (*dm20151123.Client, error) {
+	if engine.client != nil {
+		return engine.client, nil
+	}
 	akConfig := new(credential.Config).SetType("access_key").
 		SetAccessKeyId(engine.AccessKeyId).
 		SetAccessKeySecret(engine.AccessKeySecret)
@@ -31,6 +35,9 @@ func (engine *AliEmailEngine) createClient() (*dm20151123.Client, error) {
 	}
 	config.Endpoint = tea.String("dm.aliyuncs.com")
 	result, err := dm20151123.NewClient(config)
+	if err == nil {
+		engine.client = result
+	}
 	return result, err
 }
 
