@@ -17,6 +17,7 @@ type AliEmailEngine struct {
 	AccessKeyId     string             `json:"access_key"`
 	AccessKeySecret string             `json:"access_secret"`
 	FromEmail       string             `json:"from_email"`
+	FromAlias       string             `json:"from_alias"`
 }
 
 func (engine *AliEmailEngine) createClient() (*dm20151123.Client, error) {
@@ -48,6 +49,7 @@ func (engine *AliEmailEngine) SendMail(toAddress string, subject string, txtBody
 	}
 	singleSendMailRequest := &dm20151123.SingleSendMailRequest{
 		AccountName:    tea.String(engine.FromEmail),
+		FromAlias:      tea.String(engine.FromAlias),
 		AddressType:    tea.Int32(1),
 		ReplyToAddress: tea.Bool(false),
 		ToAddress:      tea.String(toAddress),
