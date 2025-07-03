@@ -41,7 +41,7 @@ func (engine *AliEmailEngine) createClient() (*dm20151123.Client, error) {
 	return result, err
 }
 
-func (engine *AliEmailEngine) SendMail(toAddress string, subject string, body string) error {
+func (engine *AliEmailEngine) SendMail(toAddress string, subject string, txtBody, htmlBody string) error {
 	client, err := engine.createClient()
 	if err != nil {
 		return err
@@ -52,7 +52,8 @@ func (engine *AliEmailEngine) SendMail(toAddress string, subject string, body st
 		ReplyToAddress: tea.Bool(false),
 		ToAddress:      tea.String(toAddress),
 		Subject:        tea.String(subject),
-		TextBody:       tea.String(body),
+		TextBody:       tea.String(txtBody),
+		HtmlBody:       tea.String(htmlBody),
 	}
 	err = func() (e error) {
 		defer func() {
