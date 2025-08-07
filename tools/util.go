@@ -8,7 +8,9 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"math/rand"
+	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"google.golang.org/protobuf/proto"
@@ -122,4 +124,14 @@ func SHA1(s string) string {
 	o := sha1.New()
 	o.Write([]byte(s))
 	return hex.EncodeToString(o.Sum(nil))
+}
+
+func GetConversationId(fromId, targetId string, channelType int32) string {
+	if channelType == 1 {
+		array := []string{fromId, targetId}
+		sort.Strings(array)
+		return strings.Join(array, ":")
+	} else {
+		return targetId
+	}
 }
