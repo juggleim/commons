@@ -36,6 +36,7 @@ var (
 	//group
 	IMErrorCode_APP_GROUP_DEFAULT       IMErrorCode = 17200
 	IMErrorCode_APP_GROUP_MEMBEREXISTED IMErrorCode = 17201
+	IMErrorCode_APP_GROUP_NORIGHT       IMErrorCode = 17202
 
 	//assistant
 	IMErrorCode_APP_ASSISTANT_PROMPT_DBERROR IMErrorCode = 17300
