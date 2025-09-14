@@ -23,6 +23,7 @@ var (
 	AdminErrorCode_NoFileEngine      AdminErrorCode = 1015
 	AdminErrorCode_AccountForbidden  AdminErrorCode = 1016
 	AdminErrorCode_AccountNotExist   AdminErrorCode = 1017
+	AdminErrorCode_NotPermission     AdminErrorCode = 1018
 )
 
 var adminCode2ApiErrorMap map[AdminErrorCode]*AdminApiErrorMsg = map[AdminErrorCode]*AdminApiErrorMsg{
