@@ -8,6 +8,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"math/rand"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -134,4 +135,52 @@ func GetConversationId(fromId, targetId string, channelType int32) string {
 	} else {
 		return targetId
 	}
+}
+
+func MaskEmail(email string) string {
+	// 分割用户名和域名
+	parts := strings.Split(email, "@")
+	if len(parts) != 2 {
+		return "无效邮箱格式" // 邮箱格式错误（不含@或多个@）
+	}
+	username := parts[0]
+	domain := parts[1]
+
+	// 处理用户名脱敏
+	var maskedUsername string
+	switch len(username) {
+	case 0:
+		maskedUsername = "" // 用户名为空（异常情况）
+	case 1:
+		maskedUsername = "*" // 用户名仅1位：全隐藏
+	case 2:
+		maskedUsername = username // 用户名2位：不隐藏（太短，隐藏后失去辨识度）
+	case 3:
+		// 用户名3位：前2位+后1位（实际是前2位+最后1位，中间无字符，直接拼接）
+		maskedUsername = username[:2] + "*"
+	default:
+		// 用户名≥4位：前2位 + 中间* + 最后1位
+		maskedUsername = username[:2] + "***" + username[len(username)-1:]
+	}
+
+	// 拼接脱敏后的邮箱
+	return maskedUsername + "@" + domain
+}
+
+func MaskPhone(phone string) string {
+	start := 3
+	length := 4
+	if valid, _ := regexp.MatchString(`^1\d{10}$`, phone); !valid {
+		return ""
+	}
+	// 校验起始位置和长度是否合法（不超出手机号范围）
+	if start < 0 || start+length > len(phone) {
+		return ""
+	}
+	// 替换指定位置为*
+	runes := []rune(phone)
+	for i := 0; i < length; i++ {
+		runes[start+i] = '*'
+	}
+	return string(runes)
 }
