@@ -141,7 +141,7 @@ func MaskEmail(email string) string {
 	// 分割用户名和域名
 	parts := strings.Split(email, "@")
 	if len(parts) != 2 {
-		return "无效邮箱格式" // 邮箱格式错误（不含@或多个@）
+		return email
 	}
 	username := parts[0]
 	domain := parts[1]
@@ -171,11 +171,11 @@ func MaskPhone(phone string) string {
 	start := 3
 	length := 4
 	if valid, _ := regexp.MatchString(`^1\d{10}$`, phone); !valid {
-		return ""
+		return phone
 	}
 	// 校验起始位置和长度是否合法（不超出手机号范围）
 	if start < 0 || start+length > len(phone) {
-		return ""
+		return phone
 	}
 	// 替换指定位置为*
 	runes := []rune(phone)
