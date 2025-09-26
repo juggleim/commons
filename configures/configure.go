@@ -25,6 +25,7 @@ type AppConfig struct {
 
 	ImApiDomain   string `yaml:"imApiDomain"`
 	ImAdminDomain string `yaml:"imAdminDomain"`
+	AdminSecret   string `yaml:"adminSecret"`
 
 	ConnectManager struct {
 		WsPort      int `yaml:"wsPort"`
