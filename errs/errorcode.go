@@ -46,6 +46,11 @@ var (
 	//file
 	IMErrorCode_APP_FILE_NOOSS   IMErrorCode = 17401
 	IMErrorCode_APP_FILE_SIGNERR IMErrorCode = 17402
+
+	//post
+	IMErrorCode_APP_POST_DEFAULT    IMErrorCode = 17500
+	IMErrorCode_APP_POST_NOTEXISTED IMErrorCode = 17501
+	IMErrorCode_APP_POST_NORIGHT    IMErrorCode = 17502
 )
 
 var imCode2ApiErrorMap map[IMErrorCode]*ApiErrorMsg = map[IMErrorCode]*ApiErrorMsg{
