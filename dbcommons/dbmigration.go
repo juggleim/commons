@@ -40,7 +40,7 @@ func Upgrade() {
 			currVersion = initVersion
 		}
 	}
-	fmt.Println("[JChatDbMigration]current version:", currVersion)
+	fmt.Println("[JCommonsDbMigration]current version:", currVersion)
 	sqlFiles, err := sqlFs.ReadDir("sqls")
 	if err == nil {
 		neededVers := []int64{}
