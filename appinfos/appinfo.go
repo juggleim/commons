@@ -19,6 +19,9 @@ func init() {
 	appLock = &sync.RWMutex{}
 }
 
+var PostMode_Normal int = 0
+var PostMode_Friend int = 1
+
 type AppInfo struct {
 	AppName      string
 	AppKey       string
@@ -29,6 +32,7 @@ type AppInfo struct {
 	SmsEngine   smsengines.ISmsEngine
 	MailEngine  emailengines.IEmailEngine
 	TransEngine transengines.ITransEngine
+	PostMode    int // 0:normal；1:friend
 
 	ExtMap map[string]interface{}
 }
